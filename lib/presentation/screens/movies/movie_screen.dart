@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cinema_app/domain/entities/movie.dart';
 import 'package:flutter_cinema_app/presentation/providers/actors/actors_by_movie_provider.dart';
 import 'package:flutter_cinema_app/presentation/providers/movies/movie_info_provider.dart';
+import 'package:flutter_cinema_app/presentation/providers/storage/favorite_movies_provider.dart';
+import 'package:flutter_cinema_app/presentation/providers/storage/is_favorite_movie_provider.dart';
 import 'package:flutter_cinema_app/presentation/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -111,19 +113,43 @@ class _MovieDetails extends StatelessWidget {
   }
 }
 
-class _CustomSliverAppBar extends StatelessWidget {
+class _CustomSliverAppBar extends ConsumerWidget {
   final Movie movie;
 
   const _CustomSliverAppBar({required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
+    final isFavoriteFuture = ref.watch(isFavoriteMovieProvier(movie.id));
 
     return SliverAppBar(
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
+
+      actions: [
+        IconButton(
+          onPressed: () async {
+            await ref
+                .read(favoriteMoviesProvider.notifier)
+                .toggleFavoriteMovie(movie);
+
+            ref.invalidate(isFavoriteMovieProvier(movie.id));
+          },
+          // icon: const  Icon(Icons.favorite_border_outlined),
+          //const Icon(Icons.favorite, color: Colors.red),
+          icon: isFavoriteFuture.when(
+            data: (isFavorite) => isFavorite
+                ? const Icon(Icons.favorite, color: Colors.red)
+                : const Icon(Icons.favorite_border_outlined),
+            error: (error, stackTrace) =>
+                throw Exception('Error al cargar el estado de favoritos'),
+            loading: () => const CircularProgressIndicator(strokeWidth: 2),
+          ),
+        ),
+      ],
+
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         // title: Text(
@@ -139,13 +165,25 @@ class _CustomSliverAppBar extends StatelessWidget {
             const CustomGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stopInit: 0.7,
-              stopFinal: 1,
+              stopInit: 0.8,
+              stopFinal: 1.0,
+              color1: Colors.transparent,
+              color2: Colors.black38,
             ),
             const CustomGradient(
               begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
               stopInit: 0.0,
-              stopFinal: 0.3,
+              stopFinal: 0.2,
+              color1: Colors.black87,
+              color2: Colors.transparent,
+            ),
+            //sombra del boton de favoritos
+            const CustomGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              stopInit: 0.0,
+              stopFinal: 0.4,
               color1: Colors.black87,
               color2: Colors.transparent,
             ),

@@ -98,7 +98,7 @@ class MovieDetails {
         "original_title": originalTitle,
         "overview": overview,
         "popularity": popularity,
-        "poster_path": posterPath,
+        "poster_path": posterPath??'',
         "production_companies": List<dynamic>.from(productionCompanies.map((x) => x.toJson())),
         "production_countries": List<dynamic>.from(productionCountries.map((x) => x.toJson())),
         "release_date": "${releaseDate.year.toString().padLeft(4, '0')}-${releaseDate.month.toString().padLeft(2, '0')}-${releaseDate.day.toString().padLeft(2, '0')}",

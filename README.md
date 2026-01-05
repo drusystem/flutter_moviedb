@@ -1,219 +1,186 @@
 
-# 📘 flutter_moviedb  
-Aplicación Flutter multiplataforma basada en la API de *The Movie Database (TMDb)*.  
-Desarrollada para practicar **Clean Architecture**, separación de capas, consumo de APIs REST y escalabilidad del código.
+# 🎬 Flutter Cinema App
 
-Incluye en este README:  
-✔ Versión Español  
-✔ Diagrama ASCII de arquitectura  
-✔ Versión Inglés  
-✔ Explicación orientada a reclutadores  
+Aplicación móvil moderna para explorar películas usando The Movie Database (TMDB) API. Desarrollada con Flutter y siguiendo los principios de Clean Architecture.
 
----
+## 📱 Características
 
-# 🇪🇸 **1. Versión en Español**
+- **Catálogo de Películas**: Visualización de películas organizadas en diferentes categorías:
+  - En cines
+  - Próximamente
+  - Populares
+  - Mejor calificadas
+- **Detalles de Películas**: Información completa incluyendo sinopsis, géneros, calificación y reparto
+- **Sistema de Favoritos**: Guarda y gestiona tus películas favoritas con almacenamiento local persistente
+- **Búsqueda Inteligente**: Búsqueda de películas con debouncing para optimizar las consultas
+- **Navegación Fluida**: Experiencia de usuario optimizada con animaciones y transiciones suaves
+- **Carga Infinita**: Paginación automática para explorar catálogos extensos. 
 
-## ✨ Características principales
-- Consulta de películas desde TMDb (populares, trending, detalles).  
-- Construcción orientada a **arquitectura limpia**.  
-- Separación por capas: Data → Domain → Presentation.  
-- Uso de archivo `.env` para la API Key.  
-- Proyecto **multiplataforma** (Android, iOS, Web, Desktop).  
+## 🏗️ Arquitectura
 
----
+El proyecto implementa **Clean Architecture** con una separación clara de responsabilidades:
 
-## 🗂️ Estructura del proyecto
+### Capas Principales
 
-```
-/lib
- ├── core/            # Config general, constantes, helpers
- ├── data/            # Modelos API, servicios HTTP, repositorios
- ├── domain/          # Entidades, contratos y casos de uso
- ├── presentation/    # Pantallas, widgets y manejo de estado
- └── main.dart        # Punto de entrada
-```
+- **Domain** (`lib/domain/`): Entidades y lógica de negocio.
+- **Infrastructure** (`lib/infrastructure/`): Implementación de datasources, repositorios y mappers.
+- **Presentation** (`lib/presentation/`): UI, widgets, providers y gestión de estado. 
 
----
-
-## 🧱 Arquitectura (Clean Architecture)
-
-### Diagrama ASCII
-
-```
-                 +-------------------------+
-                 |      PRESENTATION       |
-                 |  UI (Widgets/Pantallas) |
-                 |  State Management        |
-                 +------------+------------+
-                              |
-                              V
-                 +-------------------------+
-                 |        DOMAIN           |
-                 | Entities / Use Cases    |
-                 | Abstract Repositories   |
-                 +------------+------------+
-                              |
-                              V
-                 +-------------------------+
-                 |          DATA           |
-                 |  Models / DTOs          |
-                 |  TMDb Service (HTTP)    |
-                 |  Repository Impl.       |
-                 +-------------------------+
-```
-
----
-
-## 🔐 Variables de entorno
-
-Crear archivo `.env` a partir de `.env.template`:
-
-```
-API_KEY=TU_API_KEY
-BASE_URL=https://api.themoviedb.org/3
-```
-
----
-
-## ▶️ Ejecución
-
-```
-flutter pub get
-flutter run
-```
-
-Para Web:
-
-```
-flutter run -d chrome
-```
-
----
-
-## 🚀 Próximas Mejoras
-- Añadir Riverpod/BLoC.  
-- Paginación.  
-- Tests unitarios.  
-- Cache local (Hive).  
-- Modo oscuro.  
-
----
-
----
-
-# 🇬🇧 **2. English Version (Recruiter-friendly)**
-
-# flutter_moviedb
-Flutter multi-platform application built using **Clean Architecture** and powered by *The Movie Database (TMDb)* API.
-
-This project demonstrates:
-- Scalable code structure  
-- Separation of concerns  
-- Environment-based configuration  
-- API integration and domain modeling  
-- Multi-platform delivery (Android, iOS, Web, Desktop)
-
----
-
-## 🧱 Architecture Overview
-
-```
-PRESENTATION
-  - Flutter Widgets
-  - Screens
-  - State Management
-
-DOMAIN
-  - Entities
-  - Use Cases
-  - Repository Interfaces
-
-DATA
-  - Models / DTOs
-  - HTTP service
-  - Repository Implementations
-```
-
----
-
-## 🛠️ Project Structure
+### Estructura del Proyecto
 
 ```
 lib/
- ├── core/          
- ├── data/          
- ├── domain/        
- ├── presentation/  
- └── main.dart      
+├── config/
+│   ├── database/      # Configuración de base de datos local (Drift)
+│   ├── router/        # Configuración de rutas (Go Router)
+│   └── theme/         # Temas y estilos de la aplicación
+├── domain/
+│   └── entities/      # Modelos de dominio
+├── infrastructure/
+│   ├── datasources/   # Fuentes de datos (API, Local DB)
+│   ├── mappers/       # Transformación de datos
+│   ├── models/        # Modelos de datos
+│   └── repositories/  # Implementación de repositorios
+└── presentation/
+    ├── delegates/     # SearchDelegate personalizado
+    ├── providers/     # Gestión de estado con Riverpod
+    ├── screens/       # Pantallas principales
+    ├── views/         # Vistas específicas
+    └── widgets/       # Componentes reutilizables
 ```
 
----
+## 📸 Capturas de Pantalla
 
-## 🔐 Environment variables
+<details>
+<summary>Ver capturas de la aplicación</summary>
 
+<p align="center">
+  <a href="assets/screenshots/home.png">
+    <img src="assets/screenshots/home.png" width="240" />
+  </a>
+  <a href="assets/screenshots/detail.png">
+    <img src="assets/screenshots/detail.png" width="240" />
+  </a>
+  <a href="assets/screenshots/favorites.png">
+    <img src="assets/screenshots/favorites.png" width="240" />
+  </a>
+</p>
+
+</details>
+
+
+## 🛠️ Stack Tecnológico
+
+### Frameworks y Librerías Principales
+
+- **Flutter SDK** ^3.9.2: Framework de desarrollo multiplataforma
+- **flutter_riverpod** ^3.0.3: Gestión de estado reactiva y robusta
+- **go_router** ^17.0.0: Navegación declarativa y type-safe
+- **dio** ^5.9.0: Cliente HTTP para consumo de API REST
+
+### Persistencia de Datos
+
+- **drift** ^2.29.0: ORM type-safe para base de datos SQL local
+- **drift_flutter** ^0.2.7: Integración de Drift con Flutter
+- **path_provider** ^2.1.5: Acceso a directorios del sistema
+
+### UI/UX
+
+- **animate_do** ^4.2.0: Animaciones predefinidas elegantes
+- **card_swiper** ^3.0.1: Carrusel de tarjetas interactivo
+- **flutter_staggered_grid_view** ^0.7.0: Layouts de grilla avanzados
+- **intl** ^0.20.2: Internacionalización y formateo de fechas
+
+### Herramientas de Desarrollo
+
+- **build_runner** ^2.7.1: Generación de código
+- **drift_dev** ^2.29.0: Generador de código para Drift
+- **flutter_lints** ^5.0.0: Reglas de análisis estático
+
+## 🔑 Configuración
+
+### 1. Clonar el Repositorio
+
+```bash
+git clone https://github.com/drusystem/flutter_moviedb.git
+cd flutter_moviedb
 ```
-API_KEY=YOUR_TMDB_API_KEY
-BASE_URL=https://api.themoviedb.org/3
-```
 
----
+### 2. Instalar Dependencias
 
-## ▶️ Running the project
-
-```
+```bash
 flutter pub get
+```
+
+### 3. Configurar Variables de Entorno
+
+Crear un archivo `.env` en la raíz del proyecto:
+
+```env
+THE_MOVIEDB_KEY=tu_api_key_aqui
+```
+
+Obtén tu API key gratuita en [The Movie Database](https://www.themoviedb.org/settings/api)
+
+### 4. Generar Código (Drift Database)
+
+```bash
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+### 5. Ejecutar la Aplicación
+
+```bash
 flutter run
 ```
 
-Web:
+## 🎯 Patrones de Diseño Implementados
 
-```
-flutter run -d chrome
-```
+### Repository Pattern
+Abstracción de las fuentes de datos para facilitar testing y mantenibilidad. 
 
-Desktop:
+### Provider Pattern con Riverpod
+Gestión de estado reactiva y escalable.
 
-```
-flutter run -d windows
-```
+### Infinite Scroll Pattern
+Carga progresiva de contenido para optimizar rendimiento.
 
----
+### Debouncing Pattern
+Optimización de búsquedas en tiempo real.
 
-## 📈 Future Improvements
+## 📦 Funcionalidades Destacadas
 
-- Add state management (BLoC/Riverpod)  
-- Implement error handling  
-- Add pagination  
-- Add tests  
-- Add caching layer  
-- Add CI/CD  
+### Sistema de Favoritos con Persistencia Local
 
----
+Almacenamiento robusto usando Drift para mantener las películas favoritas del usuario de forma persistente.
 
-# 🎯 3. Extra: Data Flow Diagram (ASCII)
+### Búsqueda con Delegado Personalizado
 
-```
-User Action
-    |
-    V
-Presentation Layer
-(Screen / Widget)
-    |
-    V
-Use Case (Domain)
-    |
-Repository Interface
-    |
-    V
-Repository Implementation (Data)
-    |
-    V
-TMDb API (HTTP)
-    |
-    V
-Response → Model → Domain Entity → UI Update
-```
+Implementación de SearchDelegate con optimizaciones de rendimiento.
+
+### Navegación Type-Safe
+
+Rutas tipadas con Go Router para una navegación predecible y mantenible. 
+
+## 🚀 Próximas Mejoras
+
+- [ ] Integración de trailers de películas
+- [ ] Sistema de calificaciones y reseñas
+- [ ] Modo oscuro/claro
+- [ ] Soporte multi-idioma
+- [ ] Notificaciones para estrenos
+- [ ] Compartir películas en redes sociales
+
+## 📄 Licencia
+
+Este proyecto está desarrollado con fines educativos y de demostración de habilidades técnicas.
+
+## 👨‍💻 Desarrollador
+
+**[Andrés Quispe]**
+- GitHub: [@drusystem](https://github.com/drusystem)
+- LinkedIn: [Andrés Jesús Quispe Caballero](https://www.linkedin.com/in/andres-jesus-quispe-caballero/)
 
 ---
 
-Made with ❤️ for clean architecture practice.
+⭐ Si te gusta este proyecto, no olvides darle una estrella en GitHub!

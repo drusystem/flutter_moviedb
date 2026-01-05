@@ -61,8 +61,8 @@ lib/
   <a href="assets/screenshots/detail.png">
     <img src="assets/screenshots/detail.png" width="240" />
   </a>
-  <a href="assets/screenshots/favorites.png">
-    <img src="assets/screenshots/favorites.png" width="240" />
+  <a href="assets/screenshots/search.png">
+    <img src="assets/screenshots/search.png" width="240" />
   </a>
 </p>
 
